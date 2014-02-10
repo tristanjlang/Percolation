@@ -33,6 +33,8 @@ public class PercolationStats {
     { return mean() + 1.96 * stddev() / Math.sqrt(T); }        
     
     public static void main(String [] args) {
+        int N = (int) args[0];
+        int T = (int) args[1];
         PercolationStats ps = new PercolationStats(N, T);
         
         for (int i = 0; i < T; i++) {
