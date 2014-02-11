@@ -32,7 +32,9 @@ public class PercolationStats {
     public double confidenceHi()
     { return mean() + 1.96 * stddev() / Math.sqrt(T); }        
     
-    public static void main(int N, int T) {
+    public static void main(String args[]) {
+        int N = Integer.parseInt(args[0]);
+        int T = Integer.parseInt(args[1]);
         PercolationStats ps = new PercolationStats(N, T);
         
         for (int i = 0; i < T; i++) {
