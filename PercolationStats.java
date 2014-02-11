@@ -10,6 +10,29 @@ public class PercolationStats {
         this.N = N;
         this.T = T;
         this.sitesRequired = new double[T];
+        
+        for (int i = 0; i < T; i++) {
+            Percolation p = new Percolation(N);
+            int opencount = 0;
+            
+            while (!p.percolates()) {
+                int row, col;
+                do {
+                    row = StdRandom.uniform(1, N + 1);
+                    col = StdRandom.uniform(1, N + 1);
+                } while (p.isOpen(row, col));
+            
+                p.open(row, col);
+                opencount++;
+            }
+            
+            this.addToSitesRequired(i, opencount);
+        }
+        
+        StdOut.println("mean\t\t " + "= " + this.mean());
+        StdOut.println("stddev\t\t " + "= " + this.stddev());
+        StdOut.println("95% confidence interval " + "= " + this.confidenceLo()
+                           + ", " + this.confidenceHi());
     }
     
     // adds an entry to the array of the ratio of sites required
@@ -32,32 +55,9 @@ public class PercolationStats {
     public double confidenceHi()
     { return mean() + 1.96 * stddev() / Math.sqrt(T); }        
     
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         int N = Integer.parseInt(args[0]);
         int T = Integer.parseInt(args[1]);
         PercolationStats ps = new PercolationStats(N, T);
-        
-        for (int i = 0; i < T; i++) {
-            Percolation p = new Percolation(N);
-            int opencount = 0;
-            
-            while (!p.percolates()) {
-                int row, col;
-                do {
-                    row = StdRandom.uniform(1, N + 1);
-                    col = StdRandom.uniform(1, N + 1);
-                } while (p.isOpen(row, col));
-            
-                p.open(row, col);
-                opencount++;
-            }
-            
-            ps.addToSitesRequired(i, opencount);
-        }
-        
-        StdOut.println("mean\t\t\t" + "= " + ps.mean());
-        StdOut.println("stddev\t\t\t" + "= " + ps.stddev());
-        StdOut.println("95% confidence interval\t" + "= " + ps.confidenceLo()
-                           + ", " + ps.confidenceHi());
     }
 }

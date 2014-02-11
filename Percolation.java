@@ -62,7 +62,7 @@ public class Percolation {
     // is site (row i, column j) full?...does that site touch the top?
     public boolean isFull(int i, int j) {
         validateIndices(i, j);
-        return this.sites.connected(xyTo1D(i, j), 0);
+        return this.sites.connected(xyTo1D(i, j), 0) && this.isOpen(i, j);
     }
     
     // does the system percolate?
